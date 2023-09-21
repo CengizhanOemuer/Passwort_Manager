@@ -9,21 +9,23 @@ public class Password {
 
     // Attributes:
     private int length;
-    private boolean useLower;
-    private boolean useUpper;
-    private boolean useNumbers;
-    private boolean useSpecialCharacters;
+    private boolean includeLower;
+    private boolean includeUpper;
+    private boolean includeNumbers;
+    private boolean includeSpecialCharacters;
 
     // Constructor:
-    public Password(int length, boolean useLower, boolean useUpper, boolean useNumbers, boolean useSpecialCharacters) {
+    public Password(int length, boolean includeLower, boolean includeUpper, boolean includeNumbers, boolean includeSpecialCharacters) {
         this.length = length;
-        this.useLower = useLower;
-        this.useUpper = useUpper;
-        this.useNumbers = useNumbers;
-        this.useSpecialCharacters = useSpecialCharacters;
+        this.includeLower = includeLower;
+        this.includeUpper = includeUpper;
+        this.includeNumbers = includeNumbers;
+        this.includeSpecialCharacters = includeSpecialCharacters;
     }
 
     // Getter & Setter:
+
+
     public int getLength() {
         return length;
     }
@@ -32,37 +34,71 @@ public class Password {
         this.length = length;
     }
 
-    public boolean isUseLower() {
-        return useLower;
+    public boolean isIncludeLower() {
+        return includeLower;
     }
 
-    public void setUseLower(boolean useLower) {
-        this.useLower = useLower;
+    public void setIncludeLower(boolean includeLower) {
+        this.includeLower = includeLower;
     }
 
-    public boolean isUseUpper() {
-        return useUpper;
+    public boolean isIncludeUpper() {
+        return includeUpper;
     }
 
-    public void setUseUpper(boolean useUpper) {
-        this.useUpper = useUpper;
+    public void setIncludeUpper(boolean includeUpper) {
+        this.includeUpper = includeUpper;
     }
 
-    public boolean isUseNumbers() {
-        return useNumbers;
+    public boolean isIncludeNumbers() {
+        return includeNumbers;
     }
 
-    public void setUseNumbers(boolean useNumbers) {
-        this.useNumbers = useNumbers;
+    public void setIncludeNumbers(boolean includeNumbers) {
+        this.includeNumbers = includeNumbers;
     }
 
-    public boolean isUseSpecialCharacters() {
-        return useSpecialCharacters;
+    public boolean isIncludeSpecialCharacters() {
+        return includeSpecialCharacters;
     }
 
-    public void setUseSpecialCharacters(boolean useSpecialCharacters) {
-        this.useSpecialCharacters = useSpecialCharacters;
+    public void setIncludeSpecialCharacters(boolean includeSpecialCharacters) {
+        this.includeSpecialCharacters = includeSpecialCharacters;
     }
 
     // Methods:
+    private int getRandomIndex(String chars) {
+        int min = 0; int max = chars.length();
+        return (int)(Math.random() * ((max - min) + 1)) + min;
+    }
+
+    private String combineAllCharacters() {
+        String allCharacters = "";
+        if(includeLower) {
+            allCharacters += this.lower;
+        }
+        if(includeUpper) {
+            allCharacters += this.upper;
+        }
+        if(includeNumbers) {
+            allCharacters += this.numbers;
+        }
+        if(includeSpecialCharacters) {
+            allCharacters += this.specialsCharacters;
+        }
+        return allCharacters;
+    }
+
+    public String generatePassword() {
+        StringBuilder result = new StringBuilder(this.length);
+        String allCharacters = combineAllCharacters();
+
+        for(int i = 0; i < this.length; i++) {
+            result.append(allCharacters.charAt(getRandomIndex(allCharacters)));
+        }
+        System.out.println("Password: " + result);
+        return result.toString();
+    }
 }
+
+
