@@ -38,61 +38,59 @@ public class DBUtil {
         }
     }
 
-    // Create table:
+    // Create statements:
     public void createTable() {
-        String createTableSQL = "CREATE TABLE IF NOT EXISTS passwords (\n"
-                + "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-                + "    website TEXT NOT NULL,\n"
-                + "    username TEXT NOT NULL,\n"
-                + "    encrypted_password TEXT NOT NULL\n"
+        String createTableSQL =
+                "create table if not exists users( \n"
+                + "id integer primary key autoincrement, \n"
+                + "username text not null, \n"
+                + "encrypted_password text not null \n"
                 + ");";
 
         try (Statement statement = connection.createStatement()) {
             statement.execute(createTableSQL);
-            System.out.println("Table 'passwords' created successfully.");
+            System.out.println("Table 'users' created successfully.");
+
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println("Error creating table 'passwords': " + e.getMessage());
+            System.err.println("Error creating table 'users': " + e.getMessage());
         }
     }
 
-    // Insert:
-    public void insertPassword(String website, String username, String encryptedPassword) {
-        String insertSQL = "INSERT INTO passwords (website, username, encrypted_password) VALUES (?, ?, ?)";
+    // Insert statements:
+    public void insertUserIntoUser(String username, String encryptedPassword) {
+        String insertSQL = "insert into users (username, encrypted_password) values (?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
-            preparedStatement.setString(1, website);
-            preparedStatement.setString(2, username);
-            preparedStatement.setString(3, encryptedPassword);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, encryptedPassword);
             preparedStatement.executeUpdate();
-            System.out.println("Password record inserted successfully.");
+            System.out.println("users record inserted successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println("Error inserting password record: " + e.getMessage());
+            System.err.println("Error inserting users record: " + e.getMessage());
         }
     }
 
-    // Select:
-    public void selectPasswords() {
-        String selectSQL = "SELECT * FROM passwords";
+    // Select statements:
+    public void selectUserFromUsers() {
+        String selectSQL = "SELECT * FROM users";
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(selectSQL)) {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String website = resultSet.getString("website");
                 String username = resultSet.getString("username");
                 String encryptedPassword = resultSet.getString("encrypted_password");
 
                 System.out.println("ID: " + id);
-                System.out.println("Website: " + website);
                 System.out.println("Username: " + username);
                 System.out.println("Encrypted Password: " + encryptedPassword);
                 System.out.println();
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println("Error selecting passwords: " + e.getMessage());
+            System.err.println("Error selecting users: " + e.getMessage());
         }
     }
 

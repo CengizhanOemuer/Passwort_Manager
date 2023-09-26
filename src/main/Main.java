@@ -15,15 +15,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        DBUtil passwordManagerDatabase = null;
         try {
             // Initialize the database:
-            DBUtil passwordManagerDatabase = new DBUtil("PasswordManager.db");
-//            passwordManagerDatabase.createTable();
-//            passwordManagerDatabase.insertPassword("Testwebsite", "Cengiz", "#123#das#21#dd#");
-//            passwordManagerDatabase.selectPasswords();
-         } catch (SQLException e) {
-             e.printStackTrace();
-         }
+            passwordManagerDatabase = new DBUtil("PasswordManager.db");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         // Initialize the PasswordManager-Application:
         new PasswordManagerControl(primaryStage);
 
@@ -31,5 +30,10 @@ public class Main extends Application {
         Password pw = new Password(10, true, true, true, true);
         String s = pw.generatePassword();
         User user = new User("Cengizhan", "MeinLieblingsPasswort123");
+        User user2 = new User("Emre", "EmresPasswort123-");
+        passwordManagerDatabase.createTable();
+        passwordManagerDatabase.insertUserIntoUser("Cengiz", user.getEncryptedPassword());
+        passwordManagerDatabase.insertUserIntoUser("Emre", user2.getEncryptedPassword());
+        passwordManagerDatabase.selectUserFromUsers();
     }
 }
