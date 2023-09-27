@@ -1,10 +1,8 @@
 package main;
 
-import control.PasswordManagerControl;
+import gui.guiLogin.loginControl;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.Password;
-import model.User;
 import util.DBUtil;
 import java.sql.SQLException;
 
@@ -24,9 +22,10 @@ public class Main extends Application {
             e.printStackTrace();
         }
         // Initialize the PasswordManager-Application:
-        new PasswordManagerControl(primaryStage);
+        new loginControl(primaryStage);
 
         // Testing:
+        /*
         Password pw = new Password(10, true, true, true, true);
         String s = pw.generatePassword();
         User user = new User("Cengizhan", "MeinLieblingsPasswort123");
@@ -35,5 +34,6 @@ public class Main extends Application {
         passwordManagerDatabase.insertUserIntoUser("Cengiz", user.getEncryptedPassword());
         passwordManagerDatabase.insertUserIntoUser("Emre", user2.getEncryptedPassword());
         passwordManagerDatabase.selectUserFromUsers();
+        */
     }
 }

@@ -1,4 +1,4 @@
-package model;
+package business.businessLogin;
 
 public class Password {
     // final Attributes:

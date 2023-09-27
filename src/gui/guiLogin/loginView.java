@@ -1,6 +1,5 @@
-package view;
+package gui.guiLogin;
 
-import control.PasswordManagerControl;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,19 +9,19 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import model.PasswordManagerModel;
+import business.businessLogin.loginModel;
 
-public class PasswordManagerView {
+public class loginView {
 
     // MVC-Pattern Attributes:
-    private PasswordManagerModel passwordManagerModel;
-    private PasswordManagerControl passwordManagerControl;
+    private loginModel loginModel;
+    private loginControl loginControl;
 
     // MVC-Pattern Constructor:
-    public PasswordManagerView(PasswordManagerControl passwordManagerControl, Stage primaryStage, PasswordManagerModel passwordManagerModel) {
+    public loginView(loginControl loginControl, Stage primaryStage, loginModel loginModel) {
 
-        this.passwordManagerModel = passwordManagerModel;
-        this.passwordManagerControl = passwordManagerControl;
+        this.loginModel = loginModel;
+        this.loginControl = loginControl;
 
         // Initialising the window:
         Scene scene = new Scene(this.pane, sceneWidth, sceneHeight);
