@@ -1,5 +1,7 @@
 package gui.guiLogin;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,29 +24,31 @@ public class loginView {
 
         this.loginModel = loginModel;
         this.loginControl = loginControl;
+        this.primaryStage = primaryStage;
 
         // Initialising the window:
         Scene scene = new Scene(this.pane, sceneWidth, sceneHeight);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Password-Manager");
+        primaryStage.setTitle("Password-Manager/Login");
         primaryStage.setResizable(false);
         primaryStage.show();
 
         // Initialising components:
-            this.initComponents();
-            this.initListener();
+        this.initComponents();
+        this.initListener();
     }
 
     // GUI Attributes:
+    Stage primaryStage;
     private double sceneHeight = 340;
     private  double sceneWidth = 560;
     private Pane pane = new Pane();
     private Label lblLogin = new Label("Login to your Account");
     private TextField txtFieldUsername = new TextField("Username");
     private TextField txtFieldPassword = new TextField("Password");
-    private Button bSignUp = new Button("Sign Up");
-    private Button bLogin = new Button("Login");
-    private HBox hButtons = new HBox(bSignUp, bLogin);
+    private Button btnSignUp = new Button("Sign Up");
+    private Button btnLogin = new Button("Login");
+    private HBox hButtons = new HBox(btnSignUp, btnLogin);
     private VBox vLoginComponents = new VBox(txtFieldUsername, txtFieldPassword, hButtons);
 
 
@@ -62,8 +66,8 @@ public class loginView {
         // Text-areas:
 
         // Buttons:
-        bSignUp.setPrefWidth(72);
-        bLogin.setPrefWidth(72);
+        btnSignUp.setPrefWidth(72);
+        btnLogin.setPrefWidth(72);
 
         // Boxes:
         hButtons.setSpacing(5);
@@ -75,6 +79,11 @@ public class loginView {
     }
 
     private void initListener() {
-        return;
+        btnLogin.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                loginControl.login(primaryStage);
+            }
+        });
     }
 }
