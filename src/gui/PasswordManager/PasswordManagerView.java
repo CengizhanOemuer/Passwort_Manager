@@ -1,6 +1,6 @@
-package gui.guiPasswordManager;
+package gui.PasswordManager;
 
-import business.businessPasswordManager.PasswordManagerModel;
+import business.PasswordManager.PasswordManagerModel;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,6 +26,7 @@ public class PasswordManagerView {
         Scene scene = new Scene(this.pane, sceneWidth, sceneHeight);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
+        primaryStage.setTitle("Password-Manager");
 
         // Initialising components:
         this.initComponents();

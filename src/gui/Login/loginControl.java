@@ -1,7 +1,7 @@
-package gui.guiLogin;
+package gui.Login;
 
 import javafx.stage.Stage;
-import business.businessLogin.loginModel;
+import business.Login.loginModel;
 
 public class loginControl {
 

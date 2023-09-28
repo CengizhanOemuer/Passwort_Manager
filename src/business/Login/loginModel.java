@@ -1,6 +1,6 @@
-package business.businessLogin;
+package business.Login;
 
-import gui.guiPasswordManager.PasswordManagerControl;
+import gui.PasswordManager.PasswordManagerControl;
 import javafx.stage.Stage;
 
 public class loginModel {

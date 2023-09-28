@@ -1,6 +1,6 @@
-package gui.guiPasswordManager;
+package gui.PasswordManager;
 
-import business.businessPasswordManager.PasswordManagerModel;
+import business.PasswordManager.PasswordManagerModel;
 import javafx.stage.Stage;
 
 public class PasswordManagerControl {

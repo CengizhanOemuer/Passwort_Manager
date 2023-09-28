@@ -1,6 +1,6 @@
 package main;
 
-import gui.guiLogin.loginControl;
+import gui.Login.loginControl;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import util.DBUtil;

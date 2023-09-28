@@ -1,4 +1,4 @@
-package gui.guiLogin;
+package gui.Login;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import business.businessLogin.loginModel;
+import business.Login.loginModel;
 
 public class loginView {
 
