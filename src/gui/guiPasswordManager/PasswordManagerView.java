@@ -4,15 +4,13 @@ import business.businessPasswordManager.PasswordManagerModel;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import static javafx.scene.AccessibleAttribute.FONT;
 
 public class PasswordManagerView {
     // MVC-Pattern Attributes:
@@ -38,12 +36,15 @@ public class PasswordManagerView {
     private Pane pane = new Pane();
     private double sceneHeight = 600;
     private double sceneWidth = 800;
-    private Text txtCreateNewPassword = new Text("Create a new Password!");
+    private Text txtCreateNewPassword = new Text("What do u want to do?");
     private Font titleFont = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 24);
+    private RadioButton rBtnCreateNewPassword = new RadioButton("Create new Password!");
+    private RadioButton rBtnLoadAllSavedPasswords = new RadioButton("Load passwords!");
+    ToggleGroup toggleGroup = new ToggleGroup();
+    private VBox vBox = new VBox(rBtnCreateNewPassword, rBtnLoadAllSavedPasswords);
     private TextField txtFieldWebsite = new TextField();
     private TextField txtFieldUsername = new TextField();
     private TextField txtFieldPassword = new TextField();
-    private HBox hBox = new HBox();
     private TableView tableView = new TableView();
     private TableColumn<String, String> columnWebsite = new TableColumn<>("Website");
     private TableColumn<String, String> columnUsername = new TableColumn<>("Username");
@@ -59,8 +60,15 @@ public class PasswordManagerView {
 
         // Text-fields:
 
+        // Radio-Buttons 1:
+        rBtnCreateNewPassword.setToggleGroup(toggleGroup);
+        rBtnLoadAllSavedPasswords.setToggleGroup(toggleGroup);
 
-        // HBoxes:
+        // VBoxes:
+        vBox.setLayoutX(70);
+        vBox.setLayoutY(80);
+        vBox.setSpacing(10);
+        pane.getChildren().addAll(vBox);
 
 
         // Columns:
