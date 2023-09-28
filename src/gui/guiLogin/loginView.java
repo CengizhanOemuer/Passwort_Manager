@@ -44,8 +44,8 @@ public class loginView {
     private  double sceneWidth = 560;
     private Pane pane = new Pane();
     private Label lblLogin = new Label("Login to your Account");
-    private TextField txtFieldUsername = new TextField("Username");
-    private TextField txtFieldPassword = new TextField("Password");
+    private TextField txtFieldUsername = new TextField();
+    private TextField txtFieldPassword = new TextField();
     private Button btnSignUp = new Button("Sign Up");
     private Button btnLogin = new Button("Login");
     private HBox hButtons = new HBox(btnSignUp, btnLogin);
@@ -62,6 +62,8 @@ public class loginView {
         pane.getChildren().addAll(lblLogin);
 
         // Text-fields:
+        txtFieldUsername.setPromptText("Username");
+        txtFieldPassword.setPromptText("Password");
 
         // Text-areas:
 
