@@ -1,9 +1,12 @@
 package gui.PasswordManager;
 
 import business.PasswordManager.PasswordManagerModel;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -38,14 +41,18 @@ public class PasswordManagerView {
     private double sceneHeight = 600;
     private double sceneWidth = 800;
     private Text txtCreateNewPassword = new Text("What do u want to do?");
+    private Text txtPasswordCreation = new Text("Create your Password");
+    private TextField txtFieldWebsite = new TextField();
+    private TextField txtFieldUsername = new TextField();
+
     private Font titleFont = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 24);
+    private Font textFont = Font.font("Arial",FontWeight.NORMAL, 14);
     private RadioButton rBtnCreateNewPassword = new RadioButton("Create new Password!");
     private RadioButton rBtnLoadAllSavedPasswords = new RadioButton("Load passwords!");
     ToggleGroup toggleGroup = new ToggleGroup();
     private VBox vBox = new VBox(rBtnCreateNewPassword, rBtnLoadAllSavedPasswords);
-    private TextField txtFieldWebsite = new TextField();
-    private TextField txtFieldUsername = new TextField();
-    private TextField txtFieldPassword = new TextField();
+    VBox vBoxForNewPassword = new VBox(txtPasswordCreation, txtFieldWebsite, txtFieldUsername);
+
     private TableView tableView = new TableView();
     private TableColumn<String, String> columnWebsite = new TableColumn<>("Website");
     private TableColumn<String, String> columnUsername = new TableColumn<>("Username");
@@ -64,6 +71,8 @@ public class PasswordManagerView {
         // Radio-Buttons 1:
         rBtnCreateNewPassword.setToggleGroup(toggleGroup);
         rBtnLoadAllSavedPasswords.setToggleGroup(toggleGroup);
+        rBtnCreateNewPassword.setFont(textFont);
+        rBtnLoadAllSavedPasswords.setFont(textFont);
 
         // VBoxes:
         vBox.setLayoutX(70);
@@ -89,6 +98,26 @@ public class PasswordManagerView {
         pane.getChildren().addAll(tableView);
     }
     private void initListener() {
-
+        rBtnCreateNewPassword.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                // Initialising components:
+                txtPasswordCreation.setFont(titleFont);
+                txtFieldWebsite.setLayoutX(70);
+                txtFieldWebsite.setPromptText("Website");
+                txtFieldUsername.setPromptText("Username");
+                txtFieldUsername.setLayoutX(70);
+                vBoxForNewPassword.setLayoutX(60);
+                vBoxForNewPassword.setLayoutY(140);
+                vBoxForNewPassword.setSpacing(10);
+                pane.getChildren().addAll(vBoxForNewPassword);
+            }
+        });
+        rBtnLoadAllSavedPasswords.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                pane.getChildren().removeAll(vBoxForNewPassword);
+            }
+        });
     }
 }
