@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -59,13 +60,21 @@ public class PasswordManagerView {
     // ---------------------- standard elements ---------------------- //
 
     // ---------------------- create new password  ---------------------- //
+    private Text txtLength = new Text("Length of password");
     private TextField txtFieldWebsite = new TextField();
     private TextField txtFieldUsername = new TextField();
+    private TextField txtFieldLength = new TextField();
+    private TextField txtFieldGeneratedPassword = new TextField("");
+
     private CheckBox checkBoxIncludeUpper = new CheckBox("Include uppercase letters");
     private CheckBox checkBoxIncludeLower = new CheckBox("Include lowercase letters");
     private CheckBox checkBoxIncludeNumbers = new CheckBox("Include numbers");
     private CheckBox checkBoxIncludeSpecialCharacters = new CheckBox("Include special characters");
-    VBox vBoxForNewPassword = new VBox(txtPasswordCreation, txtFieldWebsite, txtFieldUsername, checkBoxIncludeUpper, checkBoxIncludeLower, checkBoxIncludeNumbers, checkBoxIncludeSpecialCharacters);
+    private Button btnCreatePassword = new Button("Create password!");
+    private Button btnSavePassword = new Button("Save");
+    HBox hBoxInputLength = new HBox(txtLength, txtFieldLength);
+    HBox hboxBtns = new HBox(btnCreatePassword, btnSavePassword);
+    VBox vBoxForNewPassword = new VBox(txtPasswordCreation, txtFieldWebsite, txtFieldUsername, hBoxInputLength, checkBoxIncludeUpper, checkBoxIncludeLower, checkBoxIncludeNumbers, checkBoxIncludeSpecialCharacters, txtFieldGeneratedPassword, hboxBtns);
     // ---------------------- create new password  ---------------------- //
 
     // Methods:
@@ -111,20 +120,28 @@ public class PasswordManagerView {
             public void handle(ActionEvent actionEvent) {
                 // Initialising texts:
                 txtPasswordCreation.setFont(titleFont);
+                txtLength.setFont(textFont);
                 // Initialising text-fields for input:
-                txtFieldWebsite.setLayoutX(70);
                 txtFieldWebsite.setPromptText("Website");
                 txtFieldWebsite.setMaxWidth(225);
-                txtFieldUsername.setLayoutX(70);
                 txtFieldUsername.setPromptText("Username");
                 txtFieldUsername.setMaxWidth(225);
+                txtFieldLength.setPromptText("Integer");
+                txtFieldLength.setMaxWidth(60);
                 // Initialising text-fields for output:
-
+                txtFieldGeneratedPassword.setEditable(false);
                 // Initialising checkboxes:
                 checkBoxIncludeUpper.setFont(textFont);
                 checkBoxIncludeLower.setFont(textFont);
                 checkBoxIncludeNumbers.setFont(textFont);
                 checkBoxIncludeSpecialCharacters.setFont(textFont);
+                // Initialising buttons:
+                btnCreatePassword.setFont(textFont);
+                btnSavePassword.setFont(textFont);
+                btnSavePassword.setPrefWidth(130);
+                // Initialising hBoxes:
+                hBoxInputLength.setSpacing(5);
+                hboxBtns.setSpacing(5);
                 // Initialising vBox:
                 vBoxForNewPassword.setLayoutX(60);
                 vBoxForNewPassword.setLayoutY(140);
@@ -138,5 +155,12 @@ public class PasswordManagerView {
                 pane.getChildren().removeAll(vBoxForNewPassword);
             }
         });
+        btnCreatePassword.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                txtFieldGeneratedPassword.setText(passwordManagerControl.generatePassword(Integer.parseInt(txtFieldLength.getText()), checkBoxIncludeUpper.isSelected(), checkBoxIncludeLower.isSelected(), checkBoxIncludeNumbers.isSelected(), checkBoxIncludeSpecialCharacters.isSelected()));
+            }
+        });
     }
 }
+

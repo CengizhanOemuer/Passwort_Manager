@@ -13,4 +13,9 @@ public class PasswordManagerControl {
         this.passwordManagerModel = new PasswordManagerModel();
         this.passwordManagerView = new PasswordManagerView(this, primaryStage, passwordManagerModel);
     }
+
+    // Methods:
+    public String generatePassword(int length, boolean includeUpper, boolean includeLower, boolean includeNumbers, boolean includeSpecialCharacters) {
+        return passwordManagerModel.generateNewPassword(length, includeUpper, includeLower, includeNumbers, includeSpecialCharacters);
+    }
 }

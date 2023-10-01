@@ -31,6 +31,7 @@ public class loginView {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Password-Manager/Login");
         primaryStage.setResizable(false);
+        scene.getStylesheets().add("style.css");
         primaryStage.show();
 
         // Initialising components:
