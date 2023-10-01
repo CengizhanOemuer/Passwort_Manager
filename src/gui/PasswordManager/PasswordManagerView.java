@@ -6,7 +6,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -37,36 +36,45 @@ public class PasswordManagerView {
     }
 
     // GUI-Attributes:
+
+    // ---------------------- window, scene & fonts ---------------------- //
     private Pane pane = new Pane();
     private double sceneHeight = 600;
     private double sceneWidth = 800;
-    private Text txtCreateNewPassword = new Text("What do u want to do?");
-    private Text txtPasswordCreation = new Text("Create your Password");
-    private TextField txtFieldWebsite = new TextField();
-    private TextField txtFieldUsername = new TextField();
-
     private Font titleFont = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 24);
     private Font textFont = Font.font("Arial",FontWeight.NORMAL, 14);
+    // ---------------------- window, scene & fonts ---------------------- //
+
+    // ---------------------- standard elements ---------------------- //
+    private Text txtQuestion = new Text("What do u want to do?");
+    private Text txtPasswordCreation = new Text("Create your Password");
     private RadioButton rBtnCreateNewPassword = new RadioButton("Create new Password!");
     private RadioButton rBtnLoadAllSavedPasswords = new RadioButton("Load passwords!");
     ToggleGroup toggleGroup = new ToggleGroup();
     private VBox vBox = new VBox(rBtnCreateNewPassword, rBtnLoadAllSavedPasswords);
-    VBox vBoxForNewPassword = new VBox(txtPasswordCreation, txtFieldWebsite, txtFieldUsername);
-
     private TableView tableView = new TableView();
     private TableColumn<String, String> columnWebsite = new TableColumn<>("Website");
     private TableColumn<String, String> columnUsername = new TableColumn<>("Username");
     private TableColumn<String, String> columnPassword = new TableColumn<>("Password");
+    // ---------------------- standard elements ---------------------- //
+
+    // ---------------------- create new password  ---------------------- //
+    private TextField txtFieldWebsite = new TextField();
+    private TextField txtFieldUsername = new TextField();
+    private CheckBox checkBoxIncludeUpper = new CheckBox("Include uppercase letters");
+    private CheckBox checkBoxIncludeLower = new CheckBox("Include lowercase letters");
+    private CheckBox checkBoxIncludeNumbers = new CheckBox("Include numbers");
+    private CheckBox checkBoxIncludeSpecialCharacters = new CheckBox("Include special characters");
+    VBox vBoxForNewPassword = new VBox(txtPasswordCreation, txtFieldWebsite, txtFieldUsername, checkBoxIncludeUpper, checkBoxIncludeLower, checkBoxIncludeNumbers, checkBoxIncludeSpecialCharacters);
+    // ---------------------- create new password  ---------------------- //
 
     // Methods:
     private void initComponents() {
         // Labels:
-        txtCreateNewPassword.setLayoutX(60);
-        txtCreateNewPassword.setLayoutY(60);
-        txtCreateNewPassword.setFont(titleFont);
-        pane.getChildren().addAll(txtCreateNewPassword);
-
-        // Text-fields:
+        txtQuestion.setLayoutX(60);
+        txtQuestion.setLayoutY(60);
+        txtQuestion.setFont(titleFont);
+        pane.getChildren().addAll(txtQuestion);
 
         // Radio-Buttons 1:
         rBtnCreateNewPassword.setToggleGroup(toggleGroup);
@@ -101,12 +109,23 @@ public class PasswordManagerView {
         rBtnCreateNewPassword.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                // Initialising components:
+                // Initialising texts:
                 txtPasswordCreation.setFont(titleFont);
+                // Initialising text-fields for input:
                 txtFieldWebsite.setLayoutX(70);
                 txtFieldWebsite.setPromptText("Website");
-                txtFieldUsername.setPromptText("Username");
+                txtFieldWebsite.setMaxWidth(225);
                 txtFieldUsername.setLayoutX(70);
+                txtFieldUsername.setPromptText("Username");
+                txtFieldUsername.setMaxWidth(225);
+                // Initialising text-fields for output:
+
+                // Initialising checkboxes:
+                checkBoxIncludeUpper.setFont(textFont);
+                checkBoxIncludeLower.setFont(textFont);
+                checkBoxIncludeNumbers.setFont(textFont);
+                checkBoxIncludeSpecialCharacters.setFont(textFont);
+                // Initialising vBox:
                 vBoxForNewPassword.setLayoutX(60);
                 vBoxForNewPassword.setLayoutY(140);
                 vBoxForNewPassword.setSpacing(10);
