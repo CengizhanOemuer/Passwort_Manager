@@ -158,7 +158,9 @@ public class PasswordManagerView {
         btnCreatePassword.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                txtFieldGeneratedPassword.setText(passwordManagerControl.generatePassword(Integer.parseInt(txtFieldLength.getText()), checkBoxIncludeUpper.isSelected(), checkBoxIncludeLower.isSelected(), checkBoxIncludeNumbers.isSelected(), checkBoxIncludeSpecialCharacters.isSelected()));
+                if(!(txtFieldLength.getText().length() == 0)) {
+                    txtFieldGeneratedPassword.setText(passwordManagerControl.generatePassword(Integer.parseInt(txtFieldLength.getText()), checkBoxIncludeUpper.isSelected(), checkBoxIncludeLower.isSelected(), checkBoxIncludeNumbers.isSelected(), checkBoxIncludeSpecialCharacters.isSelected()));
+                }
             }
         });
     }

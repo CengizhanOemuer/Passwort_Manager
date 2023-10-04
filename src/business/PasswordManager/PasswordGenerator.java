@@ -18,7 +18,7 @@ public class PasswordGenerator {
     public PasswordGenerator() {
 
     }
-    public PasswordGenerator(int length, boolean includeLower, boolean includeUpper, boolean includeNumbers, boolean includeSpecialCharacters) {
+    public PasswordGenerator(int length, boolean includeUpper, boolean includeLower, boolean includeNumbers, boolean includeSpecialCharacters) {
         this.length = length;
         this.includeLower = includeLower;
         this.includeUpper = includeUpper;
@@ -69,7 +69,7 @@ public class PasswordGenerator {
 
     // Methods:
     private int getRandomIndex(String chars) {
-        int min = 0; int max = chars.length();
+        int min = 0; int max = chars.length()-1;
         return (int)(Math.random() * ((max - min) + 1)) + min;
     }
 
