@@ -39,17 +39,39 @@ public class DBUtil {
     }
 
     // Create statements:
-    public void createTable() {
+    public void createTableUsers() {
         String createTableSQL =
-                "create table if not exists users( \n"
-                + "id integer primary key autoincrement, \n"
-                + "username text not null, \n"
-                + "encrypted_password text not null \n"
-                + ");";
+            "create table if not exists users( \n"
+            + "id integer primary key autoincrement, \n"
+            + "username varchar(255) not null, \n"
+            + "password_salt varchar(255) not null, \n"
+            + "encrypted_password varchar(255) not null \n"
+            + ");";
 
         try (Statement statement = connection.createStatement()) {
             statement.execute(createTableSQL);
             System.out.println("Table 'users' created successfully.");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error creating table 'users': " + e.getMessage());
+        }
+    }
+
+    public void createTablePasswords() {
+        String createTableSQL =
+            "create table if not exists passwords( \n"
+            + "id integer primary key autoincrement, \n"
+            + "user_id int, \n"
+            + "website_name varchar(255) not null, \n"
+            + "username varchar(255) not null, \n"
+            + "encrypted_password varchar(1024) not null, \n"
+            + "foreign key (user_id) references users(id) \n"
+            + ");";
+
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(createTableSQL);
+            System.out.println("Table 'passwords' created successfully.");
 
         } catch (SQLException e) {
             e.printStackTrace();

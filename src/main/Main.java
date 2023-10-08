@@ -25,15 +25,7 @@ public class Main extends Application {
         new loginControl(primaryStage);
 
         // Testing:
-        /*
-        Password pw = new Password(10, true, true, true, true);
-        String s = pw.generatePassword();
-        User user = new User("Cengizhan", "MeinLieblingsPasswort123");
-        User user2 = new User("Emre", "EmresPasswort123-");
-        passwordManagerDatabase.createTable();
-        passwordManagerDatabase.insertUserIntoUser("Cengiz", user.getEncryptedPassword());
-        passwordManagerDatabase.insertUserIntoUser("Emre", user2.getEncryptedPassword());
-        passwordManagerDatabase.selectUserFromUsers();
-        */
+       passwordManagerDatabase.createTableUsers();
+       passwordManagerDatabase.createTablePasswords();
     }
 }
