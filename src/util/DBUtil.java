@@ -129,5 +129,48 @@ public class DBUtil {
         }
     }
 
+    public void selectAllPasswordsForOneUser(int user_id) {
+        String selectSQL = "SELECT * FROM passwords INNER JOIN users on passwords.user_id = (?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+            preparedStatement.setInt(1, user_id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                System.out.println("Test1");
+                while (resultSet.next()) {
+                    System.out.println("Test2");
+                    // Passwords table:
+                    int idP = resultSet.getInt("id");
+                    int user_idP = resultSet.getInt("user_id");
+                    String website_nameP = resultSet.getString("website_name");
+                    String usernameP = resultSet.getString("username");
+                    String encryptedPasswordP = resultSet.getString("encrypted_password");
+
+                    // Users table:
+                    int idU = resultSet.getInt("id");
+                    String usernameU = resultSet.getString("username");
+                    String password_salt = resultSet.getString("password_salt");
+                    String encryptedPasswordU = resultSet.getString("encrypted_password");
+
+                    //
+                    System.out.println("id: " + idP);
+                    System.out.println("user_id: " + user_idP);
+                    System.out.println("Website_name: " + website_nameP);
+                    System.out.println("Username: " + usernameP);
+                    System.out.println("encrypted_password: " + encryptedPasswordP);
+                    System.out.println("id: " + idU);
+                    System.out.println("UsernameU: " + usernameU);
+                    System.out.println("password_salt: " + password_salt);
+                    System.out.println("encrypted_password: " + encryptedPasswordU);
+                    System.out.println();
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error selecting from passwords: " + e.getMessage());
+        }
+    }
+
 
 }

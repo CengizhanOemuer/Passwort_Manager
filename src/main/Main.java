@@ -29,7 +29,11 @@ public class Main extends Application {
         // Testing:
        passwordManagerDatabase.createTableUsers();
        passwordManagerDatabase.createTablePasswords();
+       passwordManagerDatabase.selectAllPasswordsForOneUser(1);
+       /*
        AESUtil aes = new AESUtil();
        aes.test();
+        */
+
     }
 }
