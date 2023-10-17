@@ -128,4 +128,12 @@ public class AESUtil {
         String decryptedCipherText = AESUtil.decryptPasswordBased(cipherText, key, ivParameterSpec);
         System.out.println(decryptedCipherText + " " + cipherText);
     }
+
+    public String encryptPassword(String plainText, String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+        IvParameterSpec ivParameterSpec = AESUtil.generateIv();
+        SecretKey key = AESUtil.getKeyFromPassword(password, salt);
+        String cipherText = AESUtil.encryptPasswordBased(plainText, key, ivParameterSpec);
+        System.out.println("CipherText: " + cipherText);
+        return cipherText;
+    }
 }
