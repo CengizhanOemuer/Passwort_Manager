@@ -130,7 +130,7 @@ public class DBUtil {
     }
 
     public void selectAllPasswordsForOneUser(int user_id) {
-        String selectSQL = "SELECT * FROM passwords INNER JOIN users on passwords.user_id = (?)";
+        String selectSQL = "SELECT * FROM passwords INNER JOIN users on passwords.user_id = users.id where users.id = (?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
             preparedStatement.setInt(1, user_id);
