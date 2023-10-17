@@ -29,7 +29,7 @@ public class DBUtil {
     // Close connection:
     public void dbDisconnect() throws SQLException {
         try {
-            if(connection != null && !connection.isClosed()) {
+            if (connection != null && !connection.isClosed()) {
                 connection.close();
                 System.out.println("Connection closed!");
             }
@@ -41,12 +41,12 @@ public class DBUtil {
     // Create statements:
     public void createTableUsers() {
         String createTableSQL =
-            "create table if not exists users( \n"
-            + "id integer primary key autoincrement, \n"
-            + "username varchar(255) not null, \n"
-            + "password_salt varchar(255) not null, \n"
-            + "encrypted_password varchar(255) not null \n"
-            + ");";
+                "create table if not exists users( \n"
+                        + "id integer primary key autoincrement, \n"
+                        + "username varchar(255) not null, \n"
+                        + "password_salt varchar(255) not null, \n"
+                        + "encrypted_password varchar(255) not null \n"
+                        + ");";
 
         try (Statement statement = connection.createStatement()) {
             statement.execute(createTableSQL);
@@ -60,14 +60,14 @@ public class DBUtil {
 
     public void createTablePasswords() {
         String createTableSQL =
-            "create table if not exists passwords( \n"
-            + "id integer primary key autoincrement, \n"
-            + "user_id int, \n"
-            + "website_name varchar(255) not null, \n"
-            + "username varchar(255) not null, \n"
-            + "encrypted_password varchar(1024) not null, \n"
-            + "foreign key (user_id) references users(id) \n"
-            + ");";
+                "create table if not exists passwords( \n"
+                        + "id integer primary key autoincrement, \n"
+                        + "user_id int, \n"
+                        + "website_name varchar(255) not null, \n"
+                        + "username varchar(255) not null, \n"
+                        + "encrypted_password varchar(1024) not null, \n"
+                        + "foreign key (user_id) references users(id) \n"
+                        + ");";
 
         try (Statement statement = connection.createStatement()) {
             statement.execute(createTableSQL);
@@ -91,6 +91,19 @@ public class DBUtil {
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("Error inserting users record: " + e.getMessage());
+        }
+    }
+
+    public void insertPasswordIntoPasswordTable(int user_id, String website_name, String username, String encrypted_password) {
+        String insertSQL = "INSERT INTO passwords (user_id, website_name, username, encrypted_password) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+            preparedStatement.setInt(1, user_id);
+            preparedStatement.setString(2, website_name);
+            preparedStatement.setString(3, username);
+            preparedStatement.setString(4, encrypted_password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error inserting passwords record: " + e.getMessage());
         }
     }
 
