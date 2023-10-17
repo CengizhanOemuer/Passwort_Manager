@@ -15,6 +15,9 @@ import java.util.Base64;
 
 public class AESUtil {
 
+    private final IvParameterSpec ivParameterSpec = AESUtil.generateIv();
+
+
     public static String encrypt(String algorithm, String input, SecretKey key, IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         Cipher cipher = Cipher.getInstance(algorithm);
         cipher.init(Cipher.ENCRYPT_MODE, key, iv);
@@ -130,10 +133,23 @@ public class AESUtil {
     }
 
     public String encryptPassword(String plainText, String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
-        IvParameterSpec ivParameterSpec = AESUtil.generateIv();
+        // IvParameterSpec ivParameterSpec = AESUtil.generateIv();
         SecretKey key = AESUtil.getKeyFromPassword(password, salt);
-        String cipherText = AESUtil.encryptPasswordBased(plainText, key, ivParameterSpec);
+        String cipherText = AESUtil.encryptPasswordBased(plainText, key, this.ivParameterSpec);
         System.out.println("CipherText: " + cipherText);
         return cipherText;
+    }
+
+    public String decryptPassword(String cipherText, String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+        // IvParameterSpec ivParameterSpec = AESUtil.generateIv();
+        SecretKey key = AESUtil.getKeyFromPassword(password, salt);
+        String decryptedCipherText = AESUtil.decryptPasswordBased(cipherText, key, this.ivParameterSpec);
+        System.out.println("DecryptedCipherText: " + decryptedCipherText);
+        return decryptedCipherText;
+    }
+
+    public void test() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+        String eP = encryptPassword("MeinPasswort", "test123", "123456789");
+        String dP = decryptPassword(eP, "test123", "123456789");
     }
 }

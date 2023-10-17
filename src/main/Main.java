@@ -30,6 +30,6 @@ public class Main extends Application {
        passwordManagerDatabase.createTableUsers();
        passwordManagerDatabase.createTablePasswords();
        AESUtil aes = new AESUtil();
-       aes.givenPassword_whenEncrypt_thenSuccess();
+       aes.test();
     }
 }
