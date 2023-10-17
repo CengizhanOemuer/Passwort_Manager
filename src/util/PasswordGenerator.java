@@ -1,4 +1,4 @@
-package business.PasswordManager;
+package util;
 
 public class PasswordGenerator {
     // final Attributes:

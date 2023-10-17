@@ -1,5 +1,7 @@
 package business.PasswordManager;
 
+import util.PasswordGenerator;
+
 public class PasswordManagerModel {
 
     // MVC-Pattern Constructor:
