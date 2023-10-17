@@ -14,4 +14,8 @@ public class PasswordManagerModel {
         PasswordGenerator pG = new PasswordGenerator(length, includeUpper, includeLower, includeNumbers, includeSpecialCharacters);
         return pG.generatePassword();
     }
+
+    public void savePasswordIntoDatabank(String website, String username, String password) {
+
+    }
 }

@@ -18,4 +18,8 @@ public class PasswordManagerControl {
     public String generatePassword(int length, boolean includeUpper, boolean includeLower, boolean includeNumbers, boolean includeSpecialCharacters) {
         return passwordManagerModel.generateNewPassword(length, includeUpper, includeLower, includeNumbers, includeSpecialCharacters);
     }
+
+    public void savePasswordIntoDatabank(String website, String username, String password) {
+        passwordManagerModel.savePasswordIntoDatabank(website, username, password);
+    }
 }

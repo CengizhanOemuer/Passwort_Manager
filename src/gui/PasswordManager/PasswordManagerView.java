@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -43,7 +44,7 @@ public class PasswordManagerView {
     private double sceneHeight = 600;
     private double sceneWidth = 800;
     private Font titleFont = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 24);
-    private Font textFont = Font.font("Arial",FontWeight.NORMAL, 14);
+    private Font textFont = Font.font("Arial", FontWeight.NORMAL, 14);
     // ---------------------- window, scene & fonts ---------------------- //
 
     // ---------------------- standard elements ---------------------- //
@@ -61,6 +62,8 @@ public class PasswordManagerView {
 
     // ---------------------- create new password  ---------------------- //
     private Text txtLength = new Text("Length of password");
+    private Text txtUserinformation = new Text();
+
     private TextField txtFieldWebsite = new TextField();
     private TextField txtFieldUsername = new TextField();
     private TextField txtFieldLength = new TextField();
@@ -74,7 +77,7 @@ public class PasswordManagerView {
     private Button btnSavePassword = new Button("Save");
     HBox hBoxInputLength = new HBox(txtLength, txtFieldLength);
     HBox hboxBtns = new HBox(btnCreatePassword, btnSavePassword);
-    VBox vBoxForNewPassword = new VBox(txtPasswordCreation, txtFieldWebsite, txtFieldUsername, hBoxInputLength, checkBoxIncludeUpper, checkBoxIncludeLower, checkBoxIncludeNumbers, checkBoxIncludeSpecialCharacters, txtFieldGeneratedPassword, hboxBtns);
+    VBox vBoxForNewPassword = new VBox(txtPasswordCreation, txtFieldWebsite, txtFieldUsername, hBoxInputLength, checkBoxIncludeUpper, checkBoxIncludeLower, checkBoxIncludeNumbers, checkBoxIncludeSpecialCharacters, txtFieldGeneratedPassword, hboxBtns, txtUserinformation);
     // ---------------------- create new password  ---------------------- //
 
     // Methods:
@@ -100,20 +103,21 @@ public class PasswordManagerView {
 
         // Columns:
         columnWebsite.setCellValueFactory(new PropertyValueFactory<>("Website"));
-        columnWebsite.setPrefWidth((sceneWidth/2) / 3 - 5);
+        columnWebsite.setPrefWidth((sceneWidth / 2) / 3 - 5);
         columnUsername.setCellValueFactory(new PropertyValueFactory<>("Username"));
-        columnUsername.setPrefWidth((sceneWidth/2) / 3 - 5);
+        columnUsername.setPrefWidth((sceneWidth / 2) / 3 - 5);
         columnPassword.setCellValueFactory(new PropertyValueFactory<>("Password"));
-        columnPassword.setPrefWidth((sceneWidth/2) / 3 - 5);
+        columnPassword.setPrefWidth((sceneWidth / 2) / 3 - 5);
 
         // TableView:
         tableView.getColumns().addAll(columnWebsite, columnUsername, columnPassword);
-        tableView.setLayoutX(sceneWidth/2);
+        tableView.setLayoutX(sceneWidth / 2);
         tableView.setLayoutY(30);
-        tableView.setPrefHeight(sceneHeight-60);
-        tableView.setPrefWidth(sceneWidth/2 - 30);
+        tableView.setPrefHeight(sceneHeight - 60);
+        tableView.setPrefWidth(sceneWidth / 2 - 30);
         pane.getChildren().addAll(tableView);
     }
+
     private void initListener() {
         rBtnCreateNewPassword.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -121,6 +125,8 @@ public class PasswordManagerView {
                 // Initialising texts:
                 txtPasswordCreation.setFont(titleFont);
                 txtLength.setFont(textFont);
+                txtUserinformation.setFont(textFont);
+                txtUserinformation.setFill(Color.RED);
                 // Initialising text-fields for input:
                 txtFieldWebsite.setPromptText("Website");
                 txtFieldWebsite.setMaxWidth(225);
@@ -146,6 +152,7 @@ public class PasswordManagerView {
                 vBoxForNewPassword.setLayoutX(60);
                 vBoxForNewPassword.setLayoutY(140);
                 vBoxForNewPassword.setSpacing(10);
+
                 pane.getChildren().addAll(vBoxForNewPassword);
             }
         });
@@ -158,8 +165,18 @@ public class PasswordManagerView {
         btnCreatePassword.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                if(!(txtFieldLength.getText().length() == 0)) {
+                if (!(txtFieldLength.getText().length() == 0)) {
                     txtFieldGeneratedPassword.setText(passwordManagerControl.generatePassword(Integer.parseInt(txtFieldLength.getText()), checkBoxIncludeUpper.isSelected(), checkBoxIncludeLower.isSelected(), checkBoxIncludeNumbers.isSelected(), checkBoxIncludeSpecialCharacters.isSelected()));
+                }
+            }
+        });
+        btnSavePassword.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(!(txtFieldLength.getText().length() == 0) && !(txtFieldWebsite.getText().length() == 0) && !(txtFieldUsername.getText().length() == 0) && !(txtFieldGeneratedPassword.getText().length() == 0)) {
+                    passwordManagerControl.savePasswordIntoDatabank(txtFieldWebsite.getText(), txtFieldUsername.getText(), txtFieldGeneratedPassword.getText());
+                } else{
+                    txtUserinformation.setText("You have to fill out all text-fields\nto save a password");
                 }
             }
         });
