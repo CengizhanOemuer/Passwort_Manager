@@ -19,4 +19,7 @@ public class loginControl {
     public void login(Stage primaryStage) {
         this.loginModel.login(primaryStage);
     }
+    public void openSignUpWindow(Stage primaryStage) {
+        this.loginModel.openSignUpWindow(primaryStage);
+    }
 }

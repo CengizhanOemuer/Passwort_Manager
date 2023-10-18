@@ -1,6 +1,7 @@
 package business.Login;
 
 import gui.PasswordManager.PasswordManagerControl;
+import gui.SignUp.SignUpControl;
 import javafx.stage.Stage;
 
 public class loginModel {
@@ -15,5 +16,8 @@ public class loginModel {
         new PasswordManagerControl(primaryStage);
     }
 
+    public void openSignUpWindow(Stage primaryStage) {
+        new SignUpControl(primaryStage);
+    }
 
 }

@@ -88,5 +88,11 @@ public class loginView {
                 loginControl.login(primaryStage);
             }
         });
+        btnSignUp.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                loginControl.openSignUpWindow(primaryStage);
+            }
+        });
     }
 }
