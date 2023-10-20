@@ -120,9 +120,9 @@ public class SignUpView {
 
     // Methods:
     public void showInformationWindow(String message) {
-        new InformationWindowShower(Alert.AlertType.INFORMATION, "Information", message);
+        new InformationWindowShower(Alert.AlertType.INFORMATION, "-Information", message).showInformationWindow();
     }
     public void showErrorWindow(String errorType,String message) {
-        new InformationWindowShower(Alert.AlertType.ERROR, errorType + "Error", message);
+        new InformationWindowShower(Alert.AlertType.ERROR, errorType + "-Error", message).showInformationWindow();
     }
 }

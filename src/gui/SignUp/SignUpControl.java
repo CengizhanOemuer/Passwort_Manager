@@ -17,7 +17,7 @@ public class SignUpControl {
         if(password.equals(repeatedPassword)) {
 
         } else {
-            
+            signUpView.showErrorWindow("Sign-Up", "Passwords don't match up!");
         }
     }
 }
