@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -18,6 +19,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import util.InformationWindowShower;
 
 public class SignUpView {
     // Attributes:
@@ -111,8 +113,16 @@ public class SignUpView {
         btnSignUp.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-
+                signUpControl.trySignUp(txtFieldInputUsername.getText(), txtFieldInputPassword.getText(), txtFieldInputPasswordAgain.getText());
             }
         });
+    }
+
+    // Methods:
+    public void showInformationWindow(String message) {
+        new InformationWindowShower(Alert.AlertType.INFORMATION, "Information", message);
+    }
+    public void showErrorWindow(String errorType,String message) {
+        new InformationWindowShower(Alert.AlertType.ERROR, errorType + "Error", message);
     }
 }

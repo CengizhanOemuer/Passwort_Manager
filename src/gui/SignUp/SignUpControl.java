@@ -12,4 +12,12 @@ public class SignUpControl {
         this.signUpModel = new SignUpModel();
         this.signUpView = new SignUpView(this, primaryStage, signUpModel);
     }
+
+    public void trySignUp(String username, String password, String repeatedPassword) {
+        if(password.equals(repeatedPassword)) {
+
+        } else {
+            
+        }
+    }
 }
