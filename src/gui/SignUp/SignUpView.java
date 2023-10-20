@@ -1,9 +1,12 @@
 package gui.SignUp;
 
 import business.SignUp.SignUpModel;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
@@ -60,6 +63,10 @@ public class SignUpView {
     private TextField txtFieldInputPasswordAgain;
     /* Text-fields for V-Box */
     /* ---------------------------------------------- */
+    /* Buttons for V-Box */
+    private Button btnSignUp;
+    /* Buttons for V-Box */
+    /* ---------------------------------------------- */
     /* -V-Box- */
     private VBox vBoxSignUp;
     /* -V-Box- */
@@ -91,13 +98,21 @@ public class SignUpView {
         txtFieldInputPassword.setMaxWidth(230);
         txtFieldInputPasswordAgain.setPromptText("Repeat password");
         txtFieldInputPasswordAgain.setMaxWidth(230);
+        // Buttons:
+        btnSignUp = new Button("Sign Up");
+        btnSignUp.setPrefWidth(230);
         // ---
-        vBoxSignUp.getChildren().addAll(lblSignUp, txtFieldInputUsername, txtFieldInputPassword, txtFieldInputPasswordAgain);
+        vBoxSignUp.getChildren().addAll(lblSignUp, txtFieldInputUsername, txtFieldInputPassword, txtFieldInputPasswordAgain, btnSignUp);
         root.getChildren().addAll(vBoxSignUp);
     }
 
     // Initialising-Listeners-Method:
     public void initListener() {
+        btnSignUp.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
 
+            }
+        });
     }
 }
