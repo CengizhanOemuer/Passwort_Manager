@@ -32,10 +32,10 @@ public class Main extends Application {
         // passwordManagerDatabase.selectAllPasswordsForOneUser(1);
         // passwordManagerDatabase.checkForUsernameInUsersTable("Cengiz");
         // passwordManagerDatabase.checkForUsernameInUsersTable("Emre");
-        /*
+
         AESUtil aes = new AESUtil();
         aes.test();
-        */
+
 
     }
 }

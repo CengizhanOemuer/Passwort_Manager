@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.Arrays;
 import java.util.Base64;
 
 public class AESUtil {
@@ -132,6 +133,7 @@ public class AESUtil {
         System.out.println(decryptedCipherText + " " + cipherText);
     }
 
+    // ----------------------------------------------------------------------
     public String encryptPassword(String plainText, String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         // IvParameterSpec ivParameterSpec = AESUtil.generateIv();
         SecretKey key = AESUtil.getKeyFromPassword(password, salt);
@@ -148,8 +150,18 @@ public class AESUtil {
         return decryptedCipherText;
     }
 
+    public byte[] generateSalt() {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        // System.out.println(Arrays.toString(salt));
+        return salt;
+    }
+
+
     public void test() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
         String eP = encryptPassword("MeinPasswort", "test123", "123456789");
         String dP = decryptPassword(eP, "test123", "123456789");
+        byte[] salt = generateSalt();
     }
 }
