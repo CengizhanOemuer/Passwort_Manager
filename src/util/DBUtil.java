@@ -80,7 +80,7 @@ public class DBUtil {
     }
 
     // Insert statements:
-    public void insertUserIntoUser(String username, String encryptedPassword) {
+    public void insertUserIntoUsersTable(String username, String encryptedPassword) {
         String insertSQL = "insert into users (username, encrypted_password) values (?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
