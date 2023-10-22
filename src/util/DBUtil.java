@@ -80,12 +80,13 @@ public class DBUtil {
     }
 
     // Insert statements:
-    public void insertUserIntoUsersTable(String username, String encryptedPassword) {
-        String insertSQL = "insert into users (username, encrypted_password) values (?, ?)";
+    public void insertUserIntoUsersTable(String username, byte[] password_salt, String encryptedPassword) {
+        String insertSQL = "insert into users (username, password_salt,encrypted_password) values (?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
             preparedStatement.setString(1, username);
-            preparedStatement.setString(2, encryptedPassword);
+            preparedStatement.setBytes(2, password_salt);
+            preparedStatement.setString(3, encryptedPassword);
             preparedStatement.executeUpdate();
             System.out.println("users record inserted successfully.");
         } catch (SQLException e) {

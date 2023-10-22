@@ -150,18 +150,18 @@ public class AESUtil {
         return decryptedCipherText;
     }
 
-    public byte[] generateSalt() {
+    public String generateSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);
-        // System.out.println(Arrays.toString(salt));
-        return salt;
+        System.out.println(Arrays.toString(salt));
+        return Arrays.toString(salt);
     }
 
 
     public void test() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
         String eP = encryptPassword("MeinPasswort", "test123", "123456789");
         String dP = decryptPassword(eP, "test123", "123456789");
-        byte[] salt = generateSalt();
+        String salt = generateSalt();
     }
 }

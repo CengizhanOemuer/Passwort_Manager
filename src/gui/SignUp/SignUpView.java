@@ -21,6 +21,14 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import util.InformationWindowShower;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 public class SignUpView {
     // Attributes:
     private SignUpModel signUpModel;
@@ -30,6 +38,7 @@ public class SignUpView {
     public SignUpView(SignUpControl signUpControl, Stage primaryStage, SignUpModel signUpModel) {
         this.signUpModel = signUpModel;
         this.signUpControl = signUpControl;
+        this.primaryStage = primaryStage;
 
         // Initialising the window:
         Scene scene = new Scene(this.root, SCENE_WIDTH, SCENE_HEIGHT);
@@ -46,6 +55,7 @@ public class SignUpView {
     // GUI-Attributes:
     /* ---------------------------------------------- */
     /* Window */
+    private Stage primaryStage;
     private final Pane root = new Pane();
     private final double SCENE_HEIGHT = 340;
     private final double SCENE_WIDTH = 560;
@@ -113,7 +123,13 @@ public class SignUpView {
         btnSignUp.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                signUpControl.trySignUp(txtFieldInputUsername.getText(), txtFieldInputPassword.getText(), txtFieldInputPasswordAgain.getText());
+                try {
+                    signUpControl.trySignUp(txtFieldInputUsername.getText(), txtFieldInputPassword.getText(), txtFieldInputPasswordAgain.getText(), primaryStage);
+                } catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException |
+                         NoSuchAlgorithmException | InvalidKeySpecException | BadPaddingException |
+                         InvalidKeyException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
