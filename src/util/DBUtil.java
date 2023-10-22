@@ -129,6 +129,26 @@ public class DBUtil {
         }
     }
 
+    public Boolean checkForUsernameInUsersTable(String username) {
+        String selectSQL = "SELECT username FROM users where username = (?)";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+            preparedStatement.setString(1, username);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()) {
+                    if(resultSet.getString("username") != null) {
+                        System.out.println("True");
+                        return true;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error selecting username from users-table: " + e.getMessage());
+        }
+        System.out.println("False");
+        return false;
+    }
+
     public void selectAllPasswordsForOneUser(int user_id) {
         String selectSQL = "SELECT * FROM passwords INNER JOIN users on passwords.user_id = users.id where users.id = (?)";
 

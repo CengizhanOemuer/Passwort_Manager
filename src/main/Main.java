@@ -27,12 +27,14 @@ public class Main extends Application {
         new loginControl(primaryStage);
 
         // Testing:
-       passwordManagerDatabase.createTableUsers();
-       passwordManagerDatabase.createTablePasswords();
-       passwordManagerDatabase.selectAllPasswordsForOneUser(1);
-       /*
-       AESUtil aes = new AESUtil();
-       aes.test();
+        passwordManagerDatabase.createTableUsers();
+        passwordManagerDatabase.createTablePasswords();
+        // passwordManagerDatabase.selectAllPasswordsForOneUser(1);
+        // passwordManagerDatabase.checkForUsernameInUsersTable("Cengiz");
+        // passwordManagerDatabase.checkForUsernameInUsersTable("Emre");
+        /*
+        AESUtil aes = new AESUtil();
+        aes.test();
         */
 
     }
