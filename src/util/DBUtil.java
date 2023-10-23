@@ -130,6 +130,23 @@ public class DBUtil {
         }
     }
 
+    // Select password_salt from users-table for a given user:
+    public String selectPasswordSalt(String username) {
+        String selectSQL = "SELECT password_salt FROM users WHERE username = (?)";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+            preparedStatement.setString(1, username);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while(resultSet.next()) {
+                    if(resultSet.getString("password_salt") != null) return resultSet.getString("password_salt");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error selecting password_salt from users-table: " + e.getMessage());
+        }
+        return null;
+    }
+
     // Check for correct input of username and password:
     public Boolean checkUsernameAndPasswordInUsersTable(String username, String encrypted_password) {
         String selectSQL = "SELECT username, encrypted_password FROM users where username = (?) and encrypted_password = (?)";
