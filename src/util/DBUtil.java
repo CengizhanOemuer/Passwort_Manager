@@ -130,6 +130,27 @@ public class DBUtil {
         }
     }
 
+    // Check for correct input of username and password:
+    public Boolean checkUsernameAndPasswordInUsersTable(String username, String encrypted_password) {
+        String selectSQL = "SELECT username, encrypted_password FROM users where username = (?) and encrypted_password = (?)";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, encrypted_password);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()) {
+                    if(resultSet.getString("username") != null) {
+                        if(resultSet.getString("encrypted_password") != null) return true;
+                    } else return false;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error selecting username and encrypted_password from users-table: " + e.getMessage());
+        }
+        System.out.println("False");
+        return false;
+    }
+
     public Boolean checkForUsernameInUsersTable(String username) {
         String selectSQL = "SELECT username FROM users where username = (?)";
         try(PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
