@@ -55,7 +55,7 @@ public class SignUpView {
     // GUI-Attributes:
     /* ---------------------------------------------- */
     /* Window */
-    private Stage primaryStage;
+    private final Stage primaryStage;
     private final Pane root = new Pane();
     private final double SCENE_HEIGHT = 340;
     private final double SCENE_WIDTH = 560;

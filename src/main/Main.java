@@ -1,6 +1,6 @@
 package main;
 
-import gui.Login.loginControl;
+import gui.Login.LoginControl;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import util.AESUtil;
@@ -24,7 +24,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
         // Initialize the PasswordManager-Application:
-        new loginControl(primaryStage);
+        new LoginControl(primaryStage);
 
         // Testing:
         passwordManagerDatabase.createTableUsers();

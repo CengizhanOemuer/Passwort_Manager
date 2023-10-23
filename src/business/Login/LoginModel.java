@@ -4,10 +4,10 @@ import gui.PasswordManager.PasswordManagerControl;
 import gui.SignUp.SignUpControl;
 import javafx.stage.Stage;
 
-public class loginModel {
+public class LoginModel {
 
     // MVC-Pattern Constructor:
-    public loginModel() {
+    public LoginModel() {
 
     }
 

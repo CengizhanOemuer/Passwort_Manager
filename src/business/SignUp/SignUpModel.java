@@ -1,6 +1,6 @@
 package business.SignUp;
 
-import gui.Login.loginControl;
+import gui.Login.LoginControl;
 import javafx.stage.Stage;
 import util.AESUtil;
 import util.DBUtil;
@@ -44,6 +44,6 @@ public class SignUpModel {
         // Save user to db:
         db.insertUserIntoUsersTable(username, salt.getBytes(),encryptedPassword);
         // Open new login window:
-        new loginControl(primaryStage);
+        new LoginControl(primaryStage);
     }
 }

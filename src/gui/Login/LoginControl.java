@@ -1,18 +1,18 @@
 package gui.Login;
 
 import javafx.stage.Stage;
-import business.Login.loginModel;
+import business.Login.LoginModel;
 
-public class loginControl {
+public class LoginControl {
 
     // MVC-Pattern Attributes:
-    private loginModel loginModel;
-    private loginView loginView;
+    private LoginModel loginModel;
+    private LoginView loginView;
 
     // MVC-Pattern Constructor:
-    public loginControl(Stage primaryStage) {
-        this.loginModel = new loginModel();
-        this.loginView = new loginView(this, primaryStage, loginModel);
+    public LoginControl(Stage primaryStage) {
+        this.loginModel = new LoginModel();
+        this.loginView = new LoginView(this, primaryStage, loginModel);
     }
 
     // Methods:
