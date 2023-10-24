@@ -1,5 +1,6 @@
 package util;
 
+import javax.crypto.spec.IvParameterSpec;
 import java.sql.*;
 
 public class DBUtil {
@@ -109,7 +110,7 @@ public class DBUtil {
     }
 
     // Select statements:
-    public void selectUserFromUsers() {
+    public void selectUserFromUsersTable() {
         String selectSQL = "SELECT * FROM users";
 
         try (Statement statement = connection.createStatement();
@@ -131,7 +132,7 @@ public class DBUtil {
     }
 
     // Select password_salt from users-table for a given user:
-    public String selectPasswordSalt(String username) {
+    public String selectPasswordSaltFromUsersTable(String username) {
         String selectSQL = "SELECT password_salt FROM users WHERE username = (?)";
         try(PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
             preparedStatement.setString(1, username);
@@ -143,6 +144,23 @@ public class DBUtil {
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("Error selecting password_salt from users-table: " + e.getMessage());
+        }
+        return null;
+    }
+
+    // Select ivParameterSpec from users-table for a given user:
+    public Object selectIvParameterSpecFromUsersTable(String username) {
+        String selectSQL = "SELECT ivParameterSpec FROM users WHERE username = (?)";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+            preparedStatement.setString(1, username);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while(resultSet.next()) {
+                    if(resultSet.getString("ivParameterSpec") != null) return (IvParameterSpec) resultSet.getObject("ivParameterSpec");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error selecting ivParameterSpec from users-table: " + e.getMessage());
         }
         return null;
     }

@@ -16,8 +16,8 @@ import java.util.Base64;
 
 public class AESUtil {
 
-    private final IvParameterSpec ivParameterSpec = AESUtil.generateIv();
-
+    private static final byte[] ivArr = {10, -20, 30, -40, 50, 60 , -70, 80, 90, 100, -10, 20, 30, 40, 50, -60};
+    private static final  IvParameterSpec ivParameterSpec = new IvParameterSpec(ivArr);
 
     public static String encrypt(String algorithm, String input, SecretKey key, IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         Cipher cipher = Cipher.getInstance(algorithm);
@@ -134,23 +134,23 @@ public class AESUtil {
     }
 
     // ----------------------------------------------------------------------
-    public String encryptPassword(String plainText, String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+    public static String encryptPassword(String plainText, String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         // IvParameterSpec ivParameterSpec = AESUtil.generateIv();
         SecretKey key = AESUtil.getKeyFromPassword(password, salt);
-        String cipherText = AESUtil.encryptPasswordBased(plainText, key, this.ivParameterSpec);
+        String cipherText = AESUtil.encryptPasswordBased(plainText, key, ivParameterSpec);
         System.out.println("CipherText: " + cipherText);
         return cipherText;
     }
 
-    public String decryptPassword(String cipherText, String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+    public static String decryptPassword(String cipherText, String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         // IvParameterSpec ivParameterSpec = AESUtil.generateIv();
         SecretKey key = AESUtil.getKeyFromPassword(password, salt);
-        String decryptedCipherText = AESUtil.decryptPasswordBased(cipherText, key, this.ivParameterSpec);
+        String decryptedCipherText = AESUtil.decryptPasswordBased(cipherText, key, ivParameterSpec);
         System.out.println("DecryptedCipherText: " + decryptedCipherText);
         return decryptedCipherText;
     }
 
-    public String generateSalt() {
+    public static String generateSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);
@@ -158,10 +158,4 @@ public class AESUtil {
         return Arrays.toString(salt);
     }
 
-
-    public void test() throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
-        String eP = encryptPassword("MeinPasswort", "test123", "123456789");
-        String dP = decryptPassword(eP, "test123", "123456789");
-        String salt = generateSalt();
-    }
 }

@@ -15,6 +15,14 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import business.Login.LoginModel;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 public class LoginView {
 
     // Attributes:
@@ -115,7 +123,14 @@ public class LoginView {
         btnLogin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                loginControl.login(primaryStage);
+                // loginControl.login(primaryStage);
+                try {
+                    loginControl.tryLogin(txtFieldUsername.getText(), txtFieldPassword.getText(), primaryStage);
+                } catch (InvalidAlgorithmParameterException | InvalidKeyException | BadPaddingException |
+                         InvalidKeySpecException | NoSuchAlgorithmException | IllegalBlockSizeException |
+                         NoSuchPaddingException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         btnSignUp.setOnAction(new EventHandler<ActionEvent>() {

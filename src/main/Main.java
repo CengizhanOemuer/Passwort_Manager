@@ -15,27 +15,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        DBUtil passwordManagerDatabase = null;
-        try {
-            // Initialize the database:
-            passwordManagerDatabase = new DBUtil("PasswordManager.db");
+        // DB-Init:
+        DBUtil db = new DBUtil("PasswordManager.db");
+        db.createTableUsers();
+        db.createTablePasswords();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         // Initialize the PasswordManager-Application:
         new LoginControl(primaryStage);
-
-        // Testing:
-        passwordManagerDatabase.createTableUsers();
-        passwordManagerDatabase.createTablePasswords();
-        // passwordManagerDatabase.selectAllPasswordsForOneUser(1);
-        // passwordManagerDatabase.checkForUsernameInUsersTable("Cengiz");
-        // passwordManagerDatabase.checkForUsernameInUsersTable("Emre");
-
-        AESUtil aes = new AESUtil();
-        aes.test();
-
-
     }
 }

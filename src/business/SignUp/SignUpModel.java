@@ -8,17 +8,17 @@ import util.DBUtil;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class SignUpModel {
     // Attributes:
 
-    // AES:
-    private AESUtil aes = new AESUtil();
     // Database:
     private DBUtil db;
 
@@ -38,11 +38,18 @@ public class SignUpModel {
     // trySignUp-Method:
     public void trySignUp(String username, String password, Stage primaryStage) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
         // Generate random-salt for user:
-        String salt = aes.generateSalt();
+        String salt = AESUtil.generateSalt();
+
         // Encrypt password using the generated salt:
-        String encryptedPassword = aes.encryptPassword(password, password, salt);
+        String encryptedPassword = AESUtil.encryptPassword(password, password, salt);
         // Save user to db:
         db.insertUserIntoUsersTable(username, salt.getBytes(),encryptedPassword);
+        // Close database-connection:
+        try {
+            db.dbDisconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         // Open new login window:
         new LoginControl(primaryStage);
     }
