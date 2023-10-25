@@ -18,7 +18,7 @@ public class SignUpControl {
     private SignUpModel signUpModel;
     private SignUpView signUpView;
     // Database:
-    private DBUtil db;
+    private final DBUtil db;
 
     {
         try {

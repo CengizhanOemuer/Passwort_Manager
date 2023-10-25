@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -14,6 +15,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import business.Login.LoginModel;
+import util.InformationWindowShower;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -126,9 +128,10 @@ public class LoginView {
                 // loginControl.login(primaryStage);
                 try {
                     loginControl.tryLogin(txtFieldUsername.getText(), txtFieldPassword.getText(), primaryStage);
-                } catch (InvalidAlgorithmParameterException | InvalidKeyException | BadPaddingException |
-                         InvalidKeySpecException | NoSuchAlgorithmException | IllegalBlockSizeException |
-                         NoSuchPaddingException e) {
+                } catch (
+                        InvalidAlgorithmParameterException | InvalidKeyException | BadPaddingException |
+                        InvalidKeySpecException | NoSuchAlgorithmException | IllegalBlockSizeException |
+                        NoSuchPaddingException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -139,5 +142,16 @@ public class LoginView {
                 loginControl.openSignUpWindow(primaryStage);
             }
         });
+    }
+
+    // Methods:
+
+    // Information Window: --> on successful login!
+    public void showInformationWindow(String message) {
+        new InformationWindowShower(Alert.AlertType.INFORMATION, "-Information", message).showInformationWindow();
+    }
+    // Error Window: --> on failed login!
+    public void showErrorWindow(String errorType,String message) {
+        new InformationWindowShower(Alert.AlertType.ERROR, errorType + "-Error", message).showInformationWindow();
     }
 }

@@ -43,7 +43,7 @@ public class LoginModel {
         new PasswordManagerControl(primaryStage);
     }
 
-    public void tryLogin(String username, String password, Stage primaryStage) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+    public Boolean tryLogin(String username, String password, Stage primaryStage) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
         // Selecting password_salt for username from users-table:
         String password_salt = db.selectPasswordSaltFromUsersTable(username);
 
@@ -54,7 +54,11 @@ public class LoginModel {
         System.out.println("Login success: " + db.checkUsernameAndPasswordInUsersTable(username, encrypted_password));
 
         // Open PasswordManagerWindow if username and encrypted_password match:
-        if(db.checkUsernameAndPasswordInUsersTable(username, encrypted_password)) openPasswordManagerWindow(primaryStage);
+        if(db.checkUsernameAndPasswordInUsersTable(username, encrypted_password)) {
+            openPasswordManagerWindow(primaryStage);
+            return true;
+        }
+        return false;
     }
 
     public void openPasswordManagerWindow(Stage primaryStage) {
