@@ -8,13 +8,11 @@ import util.DBUtil;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.IvParameterSpec;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 public class SignUpModel {
     // Attributes:
@@ -43,7 +41,7 @@ public class SignUpModel {
         // Encrypt password using the generated salt:
         String encryptedPassword = AESUtil.encryptPassword(password, password, salt);
         // Save user to db:
-        db.insertUserIntoUsersTable(username, salt.getBytes(),encryptedPassword);
+        db.insertUserIntoUsersTable(username, salt.getBytes(), encryptedPassword);
         // Close database-connection:
         try {
             db.dbDisconnect();
@@ -51,6 +49,16 @@ public class SignUpModel {
             e.printStackTrace();
         }
         // Open new login window:
+        openLoginWindow(primaryStage);
+    }
+
+    // Method to navigate back to the login screen:
+    public void backToLogin(Stage primaryStage) {
+        openLoginWindow(primaryStage);
+    }
+
+    // Method to open a login window:
+    private void openLoginWindow(Stage primaryStage) {
         new LoginControl(primaryStage);
     }
 }

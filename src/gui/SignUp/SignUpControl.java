@@ -51,4 +51,9 @@ public class SignUpControl {
             signUpModel.trySignUp(username, password, primaryStage);
         }
     }
+
+    // BackToLogin-Method:
+    public void backToLogin(Stage primaryStage) {
+        signUpModel.backToLogin(primaryStage);
+    }
 }

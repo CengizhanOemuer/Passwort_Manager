@@ -77,6 +77,7 @@ public class SignUpView {
     /* ---------------------------------------------- */
     /* Buttons for V-Box */
     private Button btnSignUp;
+    private Button btnBackToLogin;
     /* Buttons for V-Box */
     /* ---------------------------------------------- */
     /* -V-Box- */
@@ -113,8 +114,10 @@ public class SignUpView {
         // Buttons:
         btnSignUp = new Button("Sign Up");
         btnSignUp.setPrefWidth(230);
+        btnBackToLogin = new Button("Back to Login");
+        btnBackToLogin.setPrefWidth(230);
         // ---
-        vBoxSignUp.getChildren().addAll(lblSignUp, txtFieldInputUsername, txtFieldInputPassword, txtFieldInputPasswordAgain, btnSignUp);
+        vBoxSignUp.getChildren().addAll(lblSignUp, txtFieldInputUsername, txtFieldInputPassword, txtFieldInputPasswordAgain, btnSignUp, btnBackToLogin);
         root.getChildren().addAll(vBoxSignUp);
     }
 
@@ -125,18 +128,25 @@ public class SignUpView {
             public void handle(ActionEvent actionEvent) {
                 try {
                     signUpControl.trySignUp(txtFieldInputUsername.getText(), txtFieldInputPassword.getText(), txtFieldInputPasswordAgain.getText(), primaryStage);
-                } catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException |
-                         NoSuchAlgorithmException | InvalidKeySpecException | BadPaddingException |
-                         InvalidKeyException e) {
+                } catch (
+                        InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException |
+                        NoSuchAlgorithmException | InvalidKeySpecException | BadPaddingException | InvalidKeyException e
+                ) {
                     throw new RuntimeException(e);
                 }
+            }
+        });
+        btnBackToLogin.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                signUpControl.backToLogin(primaryStage);
             }
         });
     }
 
     // Methods:
     public void showInformationWindow(String message) {
-        new InformationWindowShower(Alert.AlertType.INFORMATION, "-Information", message).showInformationWindow();
+        new InformationWindowShower(Alert.AlertType.INFORMATION, "Information", message).showInformationWindow();
     }
     public void showErrorWindow(String errorType,String message) {
         new InformationWindowShower(Alert.AlertType.ERROR, errorType + "-Error", message).showInformationWindow();
