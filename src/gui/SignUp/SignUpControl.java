@@ -36,19 +36,19 @@ public class SignUpControl {
 
     // Sign Up Method:
     public void trySignUp(String username, String password, String repeatedPassword, Stage primaryStage) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
-        // Check for correct input of the passwords:
-        if(password.equals(repeatedPassword)) {
-            // Check for already existing usernames:    --> usernames must be unique!
-            if(db.checkForUsernameInUsersTable(username)) {
-                // If username already exists show error message:
-                signUpView.showErrorWindow("Sign Up", "Username already exists!");
-            } else {
-                // On success call the trySignUp Method from the model:
-                signUpModel.trySignUp(username, password, primaryStage);
-            }
+        /* Checking for correct input */
+        if(username.isEmpty() | password.isEmpty() | repeatedPassword.isEmpty()) {
+            // Show error message if one text-field is empty!
+            signUpView.showErrorWindow("Input", "You have to fill out all text-fields!");
+        } else if(!(password.equals(repeatedPassword))) {
+            // Show error message if passwords do not match up!
+            signUpView.showErrorWindow("Password", "Your passwords do not match!");
+        } else if(db.checkForUsernameInUsersTable(username)) {
+            // Show error message if username does exist!
+            signUpView.showErrorWindow("Username", "Username already exists!");
         } else {
-            // If passwords do not match show error message:
-            signUpView.showErrorWindow("Sign-Up", "Passwords don't match up!");
+            // Try to sign up with given input:
+            signUpModel.trySignUp(username, password, primaryStage);
         }
     }
 }

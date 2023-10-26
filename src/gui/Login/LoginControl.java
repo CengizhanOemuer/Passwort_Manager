@@ -45,20 +45,17 @@ public class LoginControl {
     public void tryLogin(String username, String password, Stage primaryStage) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
         // Check for correct input:
         if(username.isEmpty() | password.isEmpty()) {
-            // If one text-field is empty show error message:
-            loginView.showErrorWindow("Login", "You have to fill out both text-fields!");
-        } else if (db.checkForUsernameInUsersTable(username)) {
-            // Check whether password matches password in db:
-            if(loginModel.tryLogin(username, password, primaryStage)) {
-                // On success show information window:
-                loginView.showInformationWindow("Login was successful!");
-            } else {
-                // If password does not match, show error window:
-                loginView.showErrorWindow("Login", "Password does not match password in data-bank!");
-            }
+            // Show error message if one text-field is empty!
+            loginView.showErrorWindow("Input", "You have to fill out all text-fields!");
+        } else if(!(db.checkForUsernameInUsersTable(username))) {
+            // Show error message if username does not exist:
+            loginView.showErrorWindow("Username", "Username not found in data-bank!");
+        } else if(!(loginModel.tryLogin(username, password, primaryStage))) {
+            // Show error message if login fails:
+            loginView.showErrorWindow("Password", "Password wrong!");
         } else {
-            // If username does not exist show error message:
-            loginView.showErrorWindow("Login", "No such user!");
+            // Show information window if login is successful!
+            loginView.showInformationWindow("Login successful!");
         }
     }
 
