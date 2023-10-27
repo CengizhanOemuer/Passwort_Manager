@@ -1,10 +1,11 @@
 package gui.PasswordManager;
 
 import business.PasswordManager.PasswordManagerModel;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -78,6 +79,7 @@ public class PasswordManagerView {
     /* Buttons for Password-Generator */
     private Button btnGenerate;
     private Button btnSave;
+    private Button btnLogOut;
     /* Buttons for Password-Generator */
     /* ---------------------------------------------- */
     /* Slider for Password-Generator */
@@ -90,7 +92,7 @@ public class PasswordManagerView {
     /* ---------------------------------------------- */
     /* VBoxes for Password-Generator */
     private VBox vBoxPasswordGenerator;
-    private VBox vBoxSettingsComponents;
+    private VBox vBoxComponents;
     private VBox vBoxCheckboxes;
     /* VBox for Password-Generator */
     /* ---------------------------------------------- */
@@ -109,22 +111,24 @@ public class PasswordManagerView {
         vBoxPasswordGenerator = new VBox();
         vBoxPasswordGenerator.setBackground(Background.fill(Color.WHITE));
         vBoxPasswordGenerator.setBorder(Border.stroke(Color.BLACK));
-        vBoxPasswordGenerator.setSpacing(10);
+        vBoxPasswordGenerator.setSpacing(15);
         vBoxPasswordGenerator.setPadding(new Insets(10, 15, 10, 15));
         vBoxPasswordGenerator.setPrefWidth(SCENE_WIDTH/2 - 10);
         vBoxPasswordGenerator.setPrefHeight(SCENE_HEIGHT-10);
         vBoxPasswordGenerator.setLayoutX(5);
         vBoxPasswordGenerator.setLayoutY(5);
 
-        vBoxSettingsComponents = new VBox();
-        vBoxSettingsComponents.setSpacing(10);
+        vBoxComponents = new VBox();
+        vBoxComponents.setSpacing(15);
+        vBoxComponents.setPadding(new Insets(30, 0, 30, 0));
+        // vBoxComponents.setBorder(Border.stroke(Color.BLACK));
 
         vBoxCheckboxes = new VBox();
-        vBoxCheckboxes.setSpacing(5);
+        vBoxCheckboxes.setSpacing(15);
 
         // HBoxes for Password-Generator:
         hBoxSliderLabels = new HBox();
-        hBoxSliderLabels.setSpacing(25);
+        hBoxSliderLabels.setSpacing(135);
 
         // Labels for Password-Generator:
         lblPasswordGenerator = new Label("Password Generator");
@@ -132,10 +136,10 @@ public class PasswordManagerView {
         lblPasswordGenerator.setFont(TITLE_FONT);
 
         lblLengthOfPassword = new Label("Length of Password:");
-        lblLengthOfPassword.setFont(TEXT_FONT);
+        lblLengthOfPassword.setFont(LABEL_FONT);
 
         lblLengthNumber = new Label("8");
-        lblLengthNumber.setFont(TEXT_FONT);
+        lblLengthNumber.setFont(LABEL_FONT);
 
         // Text Area for Password-Generator:
         txtAreaPassword = new TextArea();
@@ -161,6 +165,11 @@ public class PasswordManagerView {
         checkBoxNumbers.setFont(TEXT_FONT);
         checkBoxSpecials.setFont(TEXT_FONT);
 
+        checkBoxUpper.setPadding(new Insets(0, 25, 0, 25));
+        checkBoxLower.setPadding(new Insets(0, 25, 0, 25));
+        checkBoxNumbers.setPadding(new Insets(0, 25, 0, 25));
+        checkBoxSpecials.setPadding(new Insets(0, 25, 0, 25));
+
         // Text-fields for Password-Generator:
         txtFieldWebsite = new TextField();
         txtFieldUsername = new TextField();
@@ -171,6 +180,15 @@ public class PasswordManagerView {
         // Buttons for Password-Generator:
         btnGenerate = new Button("Generate");
         btnSave = new Button("Save");
+        btnLogOut = new Button("Log out");
+
+        btnGenerate.setPrefWidth(370);
+        btnSave.setPrefWidth(370);
+        btnLogOut.setPrefWidth(370);
+
+        btnGenerate.setFont(TEXT_FONT);
+        btnSave.setFont(TEXT_FONT);
+        btnLogOut.setFont(TEXT_FONT);
 
         /*
         // Columns:
@@ -191,18 +209,20 @@ public class PasswordManagerView {
          */
 
         // ---
-        vBoxCheckboxes.getChildren().addAll(checkBoxUpper, checkBoxLower, checkBoxNumbers, checkBoxSpecials);
         hBoxSliderLabels.getChildren().addAll(lblLengthOfPassword, lblLengthNumber);
-
-        vBoxSettingsComponents.getChildren().addAll(hBoxSliderLabels, sliderForLength, vBoxCheckboxes, btnGenerate, txtFieldWebsite, txtFieldUsername, btnSave);
-
-        vBoxPasswordGenerator.getChildren().addAll(lblPasswordGenerator, txtAreaPassword, vBoxSettingsComponents);
-
+        vBoxCheckboxes.getChildren().addAll(checkBoxUpper, checkBoxLower, checkBoxNumbers, checkBoxSpecials);
+        vBoxComponents.getChildren().addAll(lblPasswordGenerator, txtAreaPassword, hBoxSliderLabels, sliderForLength, vBoxCheckboxes, btnGenerate, txtFieldWebsite, txtFieldUsername, btnSave, btnLogOut);
+        vBoxPasswordGenerator.getChildren().addAll(vBoxComponents);
         root.getChildren().addAll(vBoxPasswordGenerator);
     }
 
     private void initListener() {
-
+        sliderForLength.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldNumber, Number newNumber) {
+                lblLengthNumber.setText(String.valueOf(newNumber.intValue()));
+            }
+        });
     }
 }
 
