@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 
 public class PasswordManagerControl {
     // MVC-Pattern Attributes:
-    private PasswordManagerModel passwordManagerModel;
+    private static PasswordManagerModel passwordManagerModel;
     private PasswordManagerView passwordManagerView;
 
     // MVC-Pattern Constructor:
@@ -15,11 +15,14 @@ public class PasswordManagerControl {
     }
 
     // Methods:
-    public String generatePassword(int length, boolean includeUpper, boolean includeLower, boolean includeNumbers, boolean includeSpecialCharacters) {
-        return passwordManagerModel.generateNewPassword(length, includeUpper, includeLower, includeNumbers, includeSpecialCharacters);
+    public static String generatePassword(int length, boolean includeUpper, boolean includeLower, boolean includeNumbers, boolean includeSpecialCharacters) {
+        return passwordManagerModel.generatePassword(length, includeUpper, includeLower, includeNumbers, includeSpecialCharacters);
     }
 
     public void savePasswordIntoDatabank(String website, String username, String password) {
         passwordManagerModel.savePasswordIntoDatabank(website, username, password);
+    }
+    public static void logOut(Stage primaryStage) {
+        PasswordManagerModel.logOut(primaryStage);
     }
 }

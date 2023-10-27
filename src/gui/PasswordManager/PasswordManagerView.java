@@ -3,6 +3,8 @@ package gui.PasswordManager;
 import business.PasswordManager.PasswordManagerModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,8 +22,8 @@ public class PasswordManagerView {
 
     // Constructor:
     public PasswordManagerView(PasswordManagerControl passwordManagerControl, Stage primaryStage, PasswordManagerModel passwordManagerModel) {
-        this.passwordManagerModel = passwordManagerModel;
         this.passwordManagerControl = passwordManagerControl;
+        this.passwordManagerModel = passwordManagerModel;
         this.primaryStage = primaryStage;
 
         // Initialising the window:
@@ -221,6 +223,30 @@ public class PasswordManagerView {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldNumber, Number newNumber) {
                 lblLengthNumber.setText(String.valueOf(newNumber.intValue()));
+            }
+        });
+        btnGenerate.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                txtAreaPassword.setText(PasswordManagerControl.generatePassword(
+                        Integer.parseInt(lblLengthNumber.getText()),
+                        checkBoxUpper.isSelected(),
+                        checkBoxLower.isSelected(),
+                        checkBoxNumbers.isSelected(),
+                        checkBoxSpecials.isSelected())
+                );
+            }
+        });
+        btnSave.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+            }
+        });
+        btnLogOut.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                PasswordManagerControl.logOut(primaryStage);
             }
         });
     }
