@@ -19,7 +19,6 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 public class LoginModel {
-
     // AES:
     private final AESUtil aes = new AESUtil();
     // Database:
@@ -39,10 +38,6 @@ public class LoginModel {
     }
 
     // Methods:
-    public void login(Stage primaryStage) {
-        new PasswordManagerControl(primaryStage);
-    }
-
     public Boolean tryLogin(String username, String password, Stage primaryStage) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
         // Selecting password_salt for username from users-table:
         String password_salt = db.selectPasswordSaltFromUsersTable(username);
@@ -55,14 +50,14 @@ public class LoginModel {
 
         // Open PasswordManagerWindow if username and encrypted_password match:
         if(db.checkUsernameAndPasswordInUsersTable(username, encrypted_password)) {
-            openPasswordManagerWindow(primaryStage);
+            openPasswordManagerWindow(primaryStage, username, encrypted_password);
             return true;
         }
         return false;
     }
 
-    public void openPasswordManagerWindow(Stage primaryStage) {
-        new PasswordManagerControl(primaryStage);
+    public void openPasswordManagerWindow(Stage primaryStage, String username, String encrypted_password) {
+        new PasswordManagerControl(primaryStage, username, encrypted_password);
     }
 
     public void openSignUpWindow(Stage primaryStage) {

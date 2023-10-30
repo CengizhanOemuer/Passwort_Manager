@@ -37,10 +37,6 @@ public class LoginControl {
     }
 
     // Methods:
-    public void login(Stage primaryStage) {
-        this.loginModel.login(primaryStage);
-    }
-
     // Login Method:
     public void tryLogin(String username, String password, Stage primaryStage) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
         // Check for correct input:

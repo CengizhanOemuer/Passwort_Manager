@@ -103,6 +103,7 @@ public class DBUtil {
             preparedStatement.setString(2, website_name);
             preparedStatement.setString(3, username);
             preparedStatement.setString(4, encrypted_password);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("Error inserting passwords record: " + e.getMessage());
@@ -129,6 +130,22 @@ public class DBUtil {
             e.printStackTrace();
             System.err.println("Error selecting users: " + e.getMessage());
         }
+    }
+
+    public int selectUserIDFromUsersTable(String username) {
+        String selectSQL = "SELECT id FROM users WHERE username = (?)";
+        int user_id = -1;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+            preparedStatement.setString(1, username);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                user_id = resultSet.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error selecting users: " + e.getMessage());
+        }
+        return user_id;
     }
 
     // Select password_salt from users-table for a given user:

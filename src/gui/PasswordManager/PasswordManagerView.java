@@ -14,6 +14,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import util.InformationWindowShower;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 public class PasswordManagerView {
     // Attributes:
@@ -228,19 +237,28 @@ public class PasswordManagerView {
         btnGenerate.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                txtAreaPassword.setText(PasswordManagerControl.generatePassword(
-                        Integer.parseInt(lblLengthNumber.getText()),
-                        checkBoxUpper.isSelected(),
-                        checkBoxLower.isSelected(),
-                        checkBoxNumbers.isSelected(),
-                        checkBoxSpecials.isSelected())
+                txtAreaPassword.setText(
+                        PasswordManagerControl.generatePassword(
+                            Integer.parseInt(lblLengthNumber.getText()),
+                            checkBoxUpper.isSelected(),
+                            checkBoxLower.isSelected(),
+                            checkBoxNumbers.isSelected(),
+                            checkBoxSpecials.isSelected()
+                        )
                 );
             }
         });
         btnSave.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-
+                try {
+                    PasswordManagerControl.savePasswordIntoDatabank(txtFieldWebsite.getText(), txtFieldUsername.getText(), txtAreaPassword.getText());
+                } catch (
+                        InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException |
+                        NoSuchAlgorithmException | InvalidKeySpecException | BadPaddingException | InvalidKeyException e
+                ) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         btnLogOut.setOnAction(new EventHandler<ActionEvent>() {
@@ -249,6 +267,17 @@ public class PasswordManagerView {
                 PasswordManagerControl.logOut(primaryStage);
             }
         });
+    }
+
+    // Methods:
+
+    // Information Window: --> only if something went right!
+    public void showInformationWindow(String message) {
+        new InformationWindowShower(Alert.AlertType.INFORMATION, "-Information", message).showInformationWindow();
+    }
+    // Error Window: --> only if something went wrong!
+    public void showErrorWindow(String errorType,String message) {
+        new InformationWindowShower(Alert.AlertType.ERROR, errorType + "-Error", message).showInformationWindow();
     }
 }
 
