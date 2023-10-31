@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -109,15 +110,35 @@ public class PasswordManagerView {
     /* ---------------------------------------------- */
     /* Password-Generator-Attributes */
     /* ---------------------------------------------- */
-    // GUI-Attributes:
-
+    /* Password-Table */
+    /* ---------------------------------------------- */
+    /* Labels */
+    private Label lblPasswordTable;
+    /* Labels */
+    /* ---------------------------------------------- */
+    /* TableViews */
     private TableView tableView = new TableView();
+    /* TableViews */
+    /* ---------------------------------------------- */
+    /* TableColumns */
     private TableColumn<String, String> columnWebsite = new TableColumn<>("Website");
     private TableColumn<String, String> columnUsername = new TableColumn<>("Username");
     private TableColumn<String, String> columnPassword = new TableColumn<>("Password");
+    /* TableColumns */
+    /* ---------------------------------------------- */
+    /* VBox for TableView */
+    private VBox vBoxTableSide;
+    /* VBox for TableView */
+    /* ---------------------------------------------- */
+    /* Password-Table */
+    /* ---------------------------------------------- */
+    // GUI-Attributes:
+
+
 
     // Methods:
     private void initComponents() {
+        /* --------------------------------------------------------------------------------------------------- */
         // V-Boxes for Password-Generator:
         vBoxPasswordGenerator = new VBox();
         vBoxPasswordGenerator.setBackground(Background.fill(Color.WHITE));
@@ -200,8 +221,23 @@ public class PasswordManagerView {
         btnGenerate.setFont(TEXT_FONT);
         btnSave.setFont(TEXT_FONT);
         btnLogOut.setFont(TEXT_FONT);
+        /* --------------------------------------------------------------------------------------------------- */
+        // VBox for TableView:
+        vBoxTableSide = new VBox();
+        vBoxTableSide.setBackground(Background.fill(Color.WHITE));
+        vBoxTableSide.setBorder(Border.stroke(Color.BLACK));
+        vBoxTableSide.setSpacing(15);
+        vBoxTableSide.setPadding(new Insets(10, 15, 10, 15));
+        vBoxTableSide.setPrefWidth(SCENE_WIDTH/2 - 10);
+        vBoxTableSide.setPrefHeight(SCENE_HEIGHT-10);
+        vBoxTableSide.setLayoutX(SCENE_WIDTH / 2 + 5);
+        vBoxTableSide.setLayoutY(5);
 
-        /*
+        // Labels:
+        lblPasswordTable = new Label("Saved Passwords");
+        lblPasswordTable.setFont(TITLE_FONT);
+        lblPasswordTable.setPadding(new Insets(0, 75, 0, 75));
+
         // Columns:
         columnWebsite.setCellValueFactory(new PropertyValueFactory<>("Website"));
         columnWebsite.setPrefWidth((SCENE_WIDTH / 2) / 3 - 5);
@@ -217,14 +253,15 @@ public class PasswordManagerView {
         tableView.setLayoutY(30);
         tableView.setPrefHeight(SCENE_HEIGHT - 60);
         tableView.setPrefWidth(SCENE_WIDTH / 2 - 30);
-         */
+        /* --------------------------------------------------------------------------------------------------- */
 
         // ---
         hBoxSliderLabels.getChildren().addAll(lblLengthOfPassword, lblLengthNumber);
         vBoxCheckboxes.getChildren().addAll(checkBoxUpper, checkBoxLower, checkBoxNumbers, checkBoxSpecials);
         vBoxComponents.getChildren().addAll(lblPasswordGenerator, txtAreaPassword, hBoxSliderLabels, sliderForLength, vBoxCheckboxes, btnGenerate, txtFieldWebsite, txtFieldUsername, btnSave, btnLogOut);
         vBoxPasswordGenerator.getChildren().addAll(vBoxComponents);
-        root.getChildren().addAll(vBoxPasswordGenerator);
+        vBoxTableSide.getChildren().addAll(lblPasswordTable,tableView);
+        root.getChildren().addAll(vBoxPasswordGenerator, vBoxTableSide);
     }
 
     private void initListener() {
