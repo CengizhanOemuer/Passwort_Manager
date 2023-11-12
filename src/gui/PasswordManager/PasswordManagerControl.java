@@ -30,6 +30,7 @@ public class PasswordManagerControl {
     public static void savePasswordIntoDatabank(String website, String username, String password) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
         if(website.isEmpty() | username.isEmpty() | password.isEmpty()) {
             passwordManagerView.showErrorWindow("Input", "Password could not be saved.\nPlease fill out all text-fields!");
+            return;
         }
         passwordManagerModel.savePasswordIntoDatabank(website, username, password);
         passwordManagerView.showInformationWindow("Password saved successfully!");
